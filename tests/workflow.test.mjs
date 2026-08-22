@@ -5,7 +5,7 @@ import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const [workflow] = JSON.parse(fs.readFileSync(path.join(root, 'workflows', 'affiliate-video-automation-demo.json'), 'utf8'));
+const [workflow] = JSON.parse(fs.readFileSync(path.join(root, 'workflows', 'social-commerce-video-automation-demo.json'), 'utf8'));
 const expected = JSON.parse(fs.readFileSync(path.join(root, 'examples', 'expected-output.json'), 'utf8'));
 const AsyncFunction = Object.getPrototypeOf(async function () {}).constructor;
 
@@ -37,7 +37,7 @@ async function runDemo() {
     'Build & Validate Storyboard',
     'Video Generation Adapter — DISABLED',
     'Human Review Required — LOCKED',
-    'Build Affiliate Platform Handoff Preview',
+    'Build Multi-Platform Handoff Preview',
     'Output — NOT PUBLISHED'
   ];
   let items = [{ json: {} }];

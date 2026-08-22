@@ -4,7 +4,7 @@ return [{
   json: {
     ...input,
     Handoff: {
-      Platform: input.TargetPlatform || 'affiliate_network',
+      Platform: input.TargetPlatform || 'social_commerce_channel',
       Mode: 'MANUAL_REVIEW_PACKAGE',
       DirectPostingEnabled: false,
       VideoAttached: false,

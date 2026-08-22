@@ -29,7 +29,7 @@ const nodes = [
   note(
     'note-overview',
     'READ ME — Offline Recruiter Demo',
-    '## Affiliate Video Automation\n\n**Flow:** fictional product text → extraction → deterministic ranking → script → storyboard → disabled generation receipt → human review → configurable affiliate-platform handoff preview.\n\n**Safety state:** inactive, credential-free, offline, zero paid calls, and no publishing nodes.',
+    '## Social Commerce Video Automation\n\n**Flow:** fictional product text → extraction → deterministic ranking → script → storyboard → disabled generation receipt → human review → configurable multi-platform handoff preview.\n\n**Safety state:** inactive, credential-free, offline, zero paid calls, and no publishing nodes.',
     [-1120, -500],
     760,
     300,
@@ -64,7 +64,7 @@ const nodes = [
   ),
   note(
     'note-stage-4',
-    '4 — Manual affiliate-platform handoff',
+    '4 — Manual multi-platform handoff',
     '## 4 · Non-publishing handoff\n\nPrepares a review package only. The final status is always `NOT_PUBLISHED`.',
     [2260, -120],
     700,
@@ -86,7 +86,7 @@ const nodes = [
   codeNode('build-storyboard', 'Build & Validate Storyboard', 'build_storyboard.js', [560, 100]),
   codeNode('compile-adapter', 'Video Generation Adapter — DISABLED', 'compile_disabled_adapter.js', [1300, 100]),
   codeNode('human-review', 'Human Review Required — LOCKED', 'human_review.js', [1640, 100]),
-  codeNode('build-handoff', 'Build Affiliate Platform Handoff Preview', 'build_handoff.js', [2340, 100]),
+  codeNode('build-handoff', 'Build Multi-Platform Handoff Preview', 'build_handoff.js', [2340, 100]),
   codeNode('final-output', 'Output — NOT PUBLISHED', 'final_output.js', [2660, 100])
 ];
 
@@ -99,7 +99,7 @@ const chain = [
   'Build & Validate Storyboard',
   'Video Generation Adapter — DISABLED',
   'Human Review Required — LOCKED',
-  'Build Affiliate Platform Handoff Preview',
+  'Build Multi-Platform Handoff Preview',
   'Output — NOT PUBLISHED'
 ];
 const connections = {};
@@ -110,7 +110,7 @@ for (let index = 0; index < chain.length - 1; index += 1) {
 }
 
 const workflow = {
-  name: 'Affiliate Video Automation — Offline Recruiter Demo',
+  name: 'Social Commerce Video Automation — Offline Recruiter Demo',
   active: false,
   nodes,
   connections,
@@ -133,6 +133,6 @@ const workflow = {
   tags: []
 };
 
-const output = path.join(root, 'workflows', 'affiliate-video-automation-demo.json');
+const output = path.join(root, 'workflows', 'social-commerce-video-automation-demo.json');
 fs.writeFileSync(output, `${JSON.stringify([workflow], null, 2)}\n`);
 console.log(`Built ${path.relative(root, output)} with ${nodes.length} nodes`);

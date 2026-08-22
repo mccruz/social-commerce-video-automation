@@ -1,6 +1,6 @@
-# Affiliate Video Automation
+# Social Commerce Video Automation
 
-> A recruiter-friendly n8n demo that turns user-supplied product details into an explainable product ranking, source-grounded short-form script, storyboard, and locked affiliate-platform handoff preview.
+> A recruiter-friendly n8n demo that turns user-supplied product details into an explainable product ranking, source-grounded short-form script, storyboard, and locked multi-platform handoff preview.
 
 [![n8n](https://img.shields.io/badge/built%20with-n8n-EA4B71.svg)](https://n8n.io/) [![Demo](https://img.shields.io/badge/demo-offline%20and%20credential--free-2D6A4F.svg)](docs/demo-guide.md) [![Generation](https://img.shields.io/badge/video%20generation-disabled-6B7280.svg)](docs/architecture.md) [![License: MIT](https://img.shields.io/badge/license-MIT-0B7F5C.svg)](LICENSE)
 
@@ -12,7 +12,7 @@ The project demonstrates an automation pattern for affiliate content operations 
 
 1. Follow the architecture diagram from fictional product text to the locked handoff preview.
 2. Scan the [business controls](#business-controls) and [design decisions](#design-decisions).
-3. Open the [importable n8n workflow](workflows/affiliate-video-automation-demo.json) or read the [architecture notes](docs/architecture.md).
+3. Open the [importable n8n workflow](workflows/social-commerce-video-automation-demo.json) or read the [architecture notes](docs/architecture.md).
 4. See the [verification record](docs/verification.md) for the exact checks run.
 
 Running n8n is optional. The repository includes an offline test harness that executes the same JavaScript embedded in the workflow.
@@ -38,7 +38,7 @@ This workflow makes each decision visible. Product selection is deterministic an
 4. **Create the content plan.** Build a hook-proof-CTA script, one-shot storyboard, continuity constraints, and a provider-neutral video prompt.
 5. **Stop before generation.** Record a disabled generation adapter with zero paid calls.
 6. **Require human review.** Block publishing until facts, rights, affiliate disclosure, product fidelity, and final media are reviewed.
-7. **Prepare an affiliate-platform preview.** Produce a configurable manual handoff package and end at `NOT_PUBLISHED`.
+7. **Prepare a multi-platform preview.** Produce a configurable manual handoff package and end at `NOT_PUBLISHED`.
 
 ## What this demonstrates
 
@@ -50,7 +50,7 @@ This workflow makes each decision visible. Product selection is deterministic an
 | AI video can alter product details | Add continuity anchors, forbidden changes, and mandatory final-media review |
 | Paid generation needs a boundary | Keep the adapter disabled and report zero submitted requests |
 | Affiliate content needs disclosure | Include disclosure in the script and handoff checklist |
-| Platform posting is not yet integrated | End in a manual affiliate-platform package marked `NOT_PUBLISHED` |
+| Platform posting is not yet integrated | End in a manual multi-platform package marked `NOT_PUBLISHED` |
 
 ## Business controls
 
@@ -98,8 +98,8 @@ Expected final status:
 ### Option 2: import into n8n
 
 1. Use n8n 2.x.
-2. Import [`workflows/affiliate-video-automation-demo.json`](workflows/affiliate-video-automation-demo.json).
-3. Open **Affiliate Video Automation — Offline Recruiter Demo**.
+2. Import [`workflows/social-commerce-video-automation-demo.json`](workflows/social-commerce-video-automation-demo.json).
+3. Open **Social Commerce Video Automation — Offline Recruiter Demo**.
 4. Select **Execute workflow**.
 5. Inspect **Output — NOT PUBLISHED**.
 
@@ -119,7 +119,7 @@ scripts/build-workflow.mjs                  Builds the importable workflow
 scripts/check-workflow.mjs                  Privacy and structure checks
 tests/workflow.test.mjs                     Offline end-to-end execution
 workflow_code/*.js                          Reviewable n8n Code-node logic
-workflows/affiliate-video-automation-demo.json  Generated credential-free workflow
+workflows/social-commerce-video-automation-demo.json  Generated credential-free workflow
 ```
 
 ## Deliberate limitations

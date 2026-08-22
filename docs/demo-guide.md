@@ -21,9 +21,9 @@ The top candidate is deterministic because the fixtures, scoring month, weights,
 
 ## Visual n8n demo
 
-1. Download [`affiliate-video-automation-demo.json`](../workflows/affiliate-video-automation-demo.json).
+1. Download [`social-commerce-video-automation-demo.json`](../workflows/social-commerce-video-automation-demo.json).
 2. In n8n, choose **Import from File**.
-3. Open **Affiliate Video Automation — Offline Recruiter Demo**.
+3. Open **Social Commerce Video Automation — Offline Recruiter Demo**.
 4. Select **Execute workflow**.
 5. Follow the colored stage notes from left to right.
 6. Inspect **Output — NOT PUBLISHED**.

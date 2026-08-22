@@ -4,7 +4,7 @@ import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const workflowPath = path.join(root, 'workflows', 'affiliate-video-automation-demo.json');
+const workflowPath = path.join(root, 'workflows', 'social-commerce-video-automation-demo.json');
 const raw = fs.readFileSync(workflowPath, 'utf8');
 
 const forbiddenPatterns = [

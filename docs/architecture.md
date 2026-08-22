@@ -11,7 +11,7 @@ flowchart LR
     E --> F[Script and storyboard]
     F --> G[Generation adapter disabled]
     G --> H[Human review required]
-    H --> I[Affiliate-platform handoff preview]
+    H --> I[Multi-platform handoff preview]
     I --> J[NOT PUBLISHED]
 ```
 
@@ -81,7 +81,7 @@ A production approval should be attributable and should inspect:
 - platform-specific format and tagging;
 - paid-request receipt and estimated cost.
 
-The affiliate-platform node prepares only a configurable manual handoff preview. The last node always returns `NOT_PUBLISHED`.
+The multi-platform node prepares only a configurable manual handoff preview. The last node always returns `NOT_PUBLISHED`.
 
 ## Production extension points
 
