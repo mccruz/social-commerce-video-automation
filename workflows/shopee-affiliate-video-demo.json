@@ -1,0 +1,343 @@
+[
+  {
+    "name": "Shopee Affiliate Video Automation — Offline Recruiter Demo",
+    "active": false,
+    "nodes": [
+      {
+        "id": "note-overview",
+        "name": "READ ME — Offline Recruiter Demo",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -1120,
+          -500
+        ],
+        "parameters": {
+          "content": "## Shopee Affiliate Video Automation\n\n**Flow:** fictional product text → extraction → deterministic ranking → script → storyboard → disabled generation receipt → human review → Shopee Video handoff preview.\n\n**Safety state:** inactive, credential-free, offline, zero paid calls, and no publishing nodes.",
+          "width": 760,
+          "height": 300,
+          "color": 7
+        }
+      },
+      {
+        "id": "note-stage-1",
+        "name": "1 — Intake, extraction, and ranking",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          -1120,
+          -120
+        ],
+        "parameters": {
+          "content": "## 1 · Product intelligence\n\nParses only fictional user-supplied text. Evidence and media-rights fields gate eligibility before transparent weighted scoring.",
+          "width": 1220,
+          "height": 520,
+          "color": 5
+        }
+      },
+      {
+        "id": "note-stage-2",
+        "name": "2 — Script and storyboard",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          180,
+          -120
+        ],
+        "parameters": {
+          "content": "## 2 · Creative planning\n\nBuilds source-grounded copy, a one-shot storyboard, continuity anchors, forbidden changes, and a provider-neutral prompt.",
+          "width": 960,
+          "height": 520,
+          "color": 4
+        }
+      },
+      {
+        "id": "note-stage-3",
+        "name": "3 — Locked production boundary",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          1220,
+          -120
+        ],
+        "parameters": {
+          "content": "## 3 · Generation and approval controls\n\nThe adapter compiles a request shape but submits nothing. Human review remains required and publishing stays blocked.",
+          "width": 960,
+          "height": 520,
+          "color": 2
+        }
+      },
+      {
+        "id": "note-stage-4",
+        "name": "4 — Manual Shopee Video handoff",
+        "type": "n8n-nodes-base.stickyNote",
+        "typeVersion": 1,
+        "position": [
+          2260,
+          -120
+        ],
+        "parameters": {
+          "content": "## 4 · Non-publishing handoff\n\nPrepares a review package only. The final status is always `NOT_PUBLISHED`.",
+          "width": 700,
+          "height": 520,
+          "color": 3
+        }
+      },
+      {
+        "id": "manual-trigger",
+        "name": "Manual Trigger — Offline Demo",
+        "type": "n8n-nodes-base.manualTrigger",
+        "typeVersion": 1,
+        "position": [
+          -1040,
+          100
+        ],
+        "parameters": {}
+      },
+      {
+        "id": "load-fixtures",
+        "name": "Load Fictional Candidate Queue",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -820,
+          100
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const candidates = [\n  {\n    CandidateId: 'DEMO-COMMUTER-001',\n    RawListingText: [\n      'Title: All-Weather Commuter Rain Cover',\n      'Category: Motorcycle Rain Gear',\n      'Price: PHP 699',\n      'Sold: 3.2K',\n      'Rating: 4.8',\n      'Reviews: 890',\n      'Description: Waterproof windproof commuter cover with reflective panels, compact storage pouch, adjustable cuffs, and breathable lining.'\n    ].join('\\n'),\n    RawAffiliateMetrics: 'Commission rate: 15%',\n    VerifiedFacts: [\n      'Waterproof outer layer',\n      'Reflective panels',\n      'Compact storage pouch'\n    ],\n    FactsVerified: true,\n    RightsConfirmed: true,\n    ImageRightsEvidence: 'fictional-demo-asset',\n    ReferenceAsset: 'fictional://commuter-rain-cover',\n    Disclosure: '#ad #Affiliate',\n    ScoringMonth: 8\n  },\n  {\n    CandidateId: 'DEMO-COMMUTER-002',\n    RawListingText: [\n      'Title: Leak-Resistant Insulated Travel Tumbler',\n      'Category: Commuter Drinkware',\n      'Price: PHP 499',\n      'Sold: 8.4K',\n      'Rating: 4.7',\n      'Reviews: 2.1K',\n      'Description: Portable insulated bottle with anti-slip base, adjustable carry loop, and compact cup-holder shape.'\n    ].join('\\n'),\n    RawAffiliateMetrics: 'Commission rate: 12%',\n    VerifiedFacts: [\n      'Insulated body',\n      'Anti-slip base',\n      'Adjustable carry loop'\n    ],\n    FactsVerified: true,\n    RightsConfirmed: true,\n    ImageRightsEvidence: 'fictional-demo-asset',\n    ReferenceAsset: 'fictional://travel-tumbler',\n    Disclosure: '#ad #Affiliate',\n    ScoringMonth: 8\n  },\n  {\n    CandidateId: 'DEMO-COMMUTER-003',\n    RawListingText: [\n      'Title: Reflective Waterproof Backpack Cover',\n      'Category: Bag Accessories',\n      'Price: PHP 249',\n      'Sold: 15K',\n      'Rating: 4.6',\n      'Reviews: 3.6K',\n      'Description: Lightweight waterproof backpack cover with reflective safety strip, adjustable elastic edge, and foldable storage bag.'\n    ].join('\\n'),\n    RawAffiliateMetrics: 'Commission rate: 10%',\n    VerifiedFacts: [\n      'Waterproof cover',\n      'Reflective safety strip',\n      'Foldable storage bag'\n    ],\n    FactsVerified: true,\n    RightsConfirmed: true,\n    ImageRightsEvidence: 'fictional-demo-asset',\n    ReferenceAsset: 'fictional://backpack-cover',\n    Disclosure: '#ad #Affiliate',\n    ScoringMonth: 8\n  }\n];\n\nreturn candidates.map(candidate => ({\n  json: {\n    ...candidate,\n    InputMode: 'FICTIONAL_USER_SUPPLIED_TEXT',\n    MarketplaceQueried: false,\n    PaidGenerationTriggered: false,\n    PublishingTriggered: false\n  }\n}));"
+        }
+      },
+      {
+        "id": "extract-score",
+        "name": "Extract Fields & Score Candidates",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -560,
+          100
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const rows = $input.all().map(item => item.json);\n\nconst clamp = value => Math.max(0, Math.min(100, value));\nconst parseNumber = value => {\n  if (value === null || value === undefined || value === '') return null;\n  const parsed = Number(String(value).replace(/,/g, '').replace(/[^0-9.+-]/g, ''));\n  return Number.isFinite(parsed) ? parsed : null;\n};\nconst parseCompact = value => {\n  const match = String(value || '').replace(/,/g, '').trim().match(/^([0-9]+(?:\\.[0-9]+)?)([kKmM])?$/);\n  if (!match) return parseNumber(value);\n  const multiplier = match[2]?.toLowerCase() === 'k' ? 1000 : match[2]?.toLowerCase() === 'm' ? 1000000 : 1;\n  return Math.round(Number(match[1]) * multiplier);\n};\nconst pick = (text, pattern) => {\n  const match = String(text || '').match(pattern);\n  return match ? String(match[1]).trim() : null;\n};\nconst countKeywords = (text, words) => words.filter(word => text.includes(word)).length;\n\nconst weights = {\n  commuterFit: 0.20,\n  commissionEconomics: 0.25,\n  demand: 0.15,\n  videoFit: 0.15,\n  trust: 0.10,\n  angleDepth: 0.10,\n  seasonality: 0.05\n};\nconst commuterWords = ['commuter', 'motorcycle', 'rain', 'waterproof', 'reflective', 'compact', 'portable', 'backpack', 'bottle', 'safety'];\nconst videoWords = ['waterproof', 'reflective', 'compact', 'adjustable', 'anti-slip', 'lightweight', 'foldable', 'insulated', 'breathable'];\nconst angleBuckets = [\n  ['rain', 'waterproof', 'weather'],\n  ['reflective', 'safety'],\n  ['compact', 'foldable', 'portable'],\n  ['adjustable', 'anti-slip', 'breathable'],\n  ['storage', 'pouch', 'bag'],\n  ['insulated', 'bottle', 'tumbler']\n];\n\nreturn rows.map(row => {\n  const source = `${row.RawListingText || ''}\\n${row.RawAffiliateMetrics || ''}`;\n  const lower = source.toLowerCase();\n  const productName = pick(row.RawListingText, /(?:^|\\n)\\s*Title\\s*:\\s*([^\\n]+)/i);\n  const category = pick(row.RawListingText, /(?:^|\\n)\\s*Category\\s*:\\s*([^\\n]+)/i);\n  const price = parseNumber(pick(source, /(?:^|\\n)\\s*Price\\s*:\\s*(?:PHP|P)?\\s*([\\d,.]+)/i));\n  const commissionPercent = parseNumber(pick(row.RawAffiliateMetrics, /Commission\\s*rate\\s*:\\s*([\\d.]+)\\s*%/i));\n  const monthlySold = parseCompact(pick(source, /(?:^|\\n)\\s*Sold\\s*:\\s*([\\d,.]+\\s*[kKmM]?)/i));\n  const rating = parseNumber(pick(source, /(?:^|\\n)\\s*Rating\\s*:\\s*([\\d.]+)/i));\n  const reviewCount = parseCompact(pick(source, /(?:^|\\n)\\s*Reviews\\s*:\\s*([\\d,.]+\\s*[kKmM]?)/i));\n\n  const missing = [];\n  if (!row.CandidateId) missing.push('CandidateId');\n  if (!productName) missing.push('ProductName');\n  if (!category) missing.push('Category');\n  if (!(price > 0)) missing.push('Price');\n  if (!(commissionPercent > 0)) missing.push('CommissionRate');\n  if (!(monthlySold >= 0)) missing.push('MonthlySold');\n  if (!(rating >= 1 && rating <= 5)) missing.push('Rating');\n  if (!(reviewCount >= 0)) missing.push('ReviewCount');\n  if (!row.FactsVerified) missing.push('FactsVerified');\n  if (!row.RightsConfirmed) missing.push('RightsConfirmed');\n  if (!row.ImageRightsEvidence) missing.push('ImageRightsEvidence');\n\n  const estimatedCommission = price && commissionPercent ? price * (commissionPercent / 100) : null;\n  const commuterFit = clamp(25 + countKeywords(lower, commuterWords) * 9);\n  const videoFit = clamp(25 + countKeywords(lower, videoWords) * 8);\n  const angleDepth = clamp(20 + angleBuckets.filter(bucket => bucket.some(word => lower.includes(word))).length * 13);\n  const rainySeason = Number(row.ScoringMonth) >= 6 && Number(row.ScoringMonth) <= 11;\n  const seasonality = /rain|waterproof|weather/.test(lower) ? (rainySeason ? 90 : 65) : 65;\n  const commissionScore = estimatedCommission === null ? 0 : clamp(estimatedCommission);\n  const demandScore = monthlySold === null ? 0 : clamp((Math.log10(1 + monthlySold) / 4) * 100);\n  const ratingScore = rating === null ? 0 : clamp(((rating - 3.5) / 1.5) * 100);\n  const reviewScore = reviewCount === null ? 0 : clamp((Math.log10(1 + reviewCount) / 4) * 100);\n  const trustScore = ratingScore * 0.7 + reviewScore * 0.3;\n  const eligible = missing.length === 0;\n  const selectionScore = eligible ? Math.round((\n    commuterFit * weights.commuterFit +\n    commissionScore * weights.commissionEconomics +\n    demandScore * weights.demand +\n    videoFit * weights.videoFit +\n    trustScore * weights.trust +\n    angleDepth * weights.angleDepth +\n    seasonality * weights.seasonality\n  ) * 10) / 10 : null;\n\n  return {\n    json: {\n      ...row,\n      ProductName: productName,\n      Category: category,\n      PricePHP: price,\n      CommissionRatePercent: commissionPercent,\n      MonthlySold: monthlySold,\n      Rating: rating,\n      ReviewCount: reviewCount,\n      EstimatedCommissionPHP: estimatedCommission === null ? null : Math.round(estimatedCommission * 100) / 100,\n      ScoreComponents: {\n        commissionEconomics: Math.round(commissionScore * 10) / 10,\n        commuterFit,\n        demand: Math.round(demandScore * 10) / 10,\n        videoFit,\n        trust: Math.round(trustScore * 10) / 10,\n        angleDepth,\n        seasonality\n      },\n      ScoringWeights: weights,\n      Eligible: eligible,\n      SelectionScore: selectionScore,\n      SelectionReason: eligible ? 'Passed extraction, evidence, and media-rights gates' : `Needs: ${missing.join(', ')}`,\n      ExtractionMode: 'USER_SUPPLIED_TEXT_ONLY',\n      MarketplaceQueried: false\n    }\n  };\n});"
+        }
+      },
+      {
+        "id": "rank-select",
+        "name": "Rank & Select Top Candidate",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          -280,
+          100
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const evaluated = $input.all().map(item => item.json);\nconst ranked = evaluated\n  .filter(candidate => candidate.Eligible)\n  .sort((a, b) =>\n    b.SelectionScore - a.SelectionScore ||\n    b.EstimatedCommissionPHP - a.EstimatedCommissionPHP ||\n    b.MonthlySold - a.MonthlySold ||\n    a.CandidateId.localeCompare(b.CandidateId)\n  )\n  .map((candidate, index) => ({ ...candidate, Rank: index + 1 }));\n\nif (!ranked.length) throw new Error('No candidate passed the extraction, evidence, and rights gates');\n\nreturn [{\n  json: {\n    RunStatus: 'TOP_CANDIDATE_READY',\n    Niche: 'Practical Commuter Finds',\n    CandidateCount: evaluated.length,\n    EligibleCount: ranked.length,\n    RankingMethod: 'DETERMINISTIC_WEIGHTED_SCORE',\n    SelectedCandidate: ranked[0],\n    RankedCandidates: ranked.map(candidate => ({\n      CandidateId: candidate.CandidateId,\n      ProductName: candidate.ProductName,\n      Rank: candidate.Rank,\n      SelectionScore: candidate.SelectionScore,\n      EstimatedCommissionPHP: candidate.EstimatedCommissionPHP,\n      ScoreComponents: candidate.ScoreComponents\n    })),\n    PaidGenerationTriggered: false,\n    PublishingTriggered: false\n  }\n}];"
+        }
+      },
+      {
+        "id": "build-script",
+        "name": "Build Hook-Proof-CTA Script",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          260,
+          100
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const input = $input.first().json;\nconst product = input.SelectedCandidate;\nconst facts = product.VerifiedFacts;\nconst sentence = value => `${String(value).trim().replace(/[.!?]+$/, '')}.`;\nconst hook = `Rainy commute? Here is one practical ${product.Category.toLowerCase()} option to review.`;\nconst proof = `Fixture detail: ${sentence(facts[0])}`;\nconst cta = 'Review the product details and tagged affiliate item before publishing.';\nconst disclosure = product.Disclosure;\nconst spokenCopy = [hook, proof, cta].join(' ');\nconst prohibitedClaims = ['best', 'guaranteed', 'lowest price', 'limited stock', 'risk-free'];\nconst blockedClaim = prohibitedClaims.find(claim => spokenCopy.toLowerCase().includes(claim));\nif (blockedClaim) throw new Error(`Script used prohibited claim: ${blockedClaim}`);\n\nreturn [{\n  json: {\n    ...input,\n    Creative: {\n      Script: {\n        Structure: 'HOOK_PROOF_CTA',\n        Hook: hook,\n        Proof: proof,\n        SupportingFacts: facts.slice(1).map(sentence),\n        CTA: cta,\n        SpokenCopy: spokenCopy,\n        Disclosure: disclosure,\n        OnScreenTextPlan: 'Add verified text and disclosure deterministically after video generation.'\n      },\n      ClaimPolicy: {\n        AllowedFacts: facts,\n        ProhibitedClaims: prohibitedClaims,\n        PricePolicy: 'Recheck price and availability at manual publishing time.'\n      },\n      Format: {\n        AspectRatio: '9:16',\n        Width: 720,\n        Height: 1280,\n        FramesPerSecond: 24,\n        TargetSeconds: 8\n      }\n    }\n  }\n}];"
+        }
+      },
+      {
+        "id": "build-storyboard",
+        "name": "Build & Validate Storyboard",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          560,
+          100
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const input = $input.first().json;\nconst product = input.SelectedCandidate;\nconst creative = input.Creative;\nif (!product.ReferenceAsset || !product.RightsConfirmed) {\n  throw new Error('Storyboard requires a fictional or rights-cleared reference asset');\n}\n\nconst shot = {\n  ShotId: 'DEMO-SHOT-01',\n  DurationSeconds: 8,\n  Task: 'IMAGE_TO_VIDEO',\n  ReferenceAsset: product.ReferenceAsset,\n  ImageRole: 'FIRST_FRAME',\n  Framing: 'Medium vertical smartphone product shot with the item inside the safe area.',\n  CameraMotion: 'One slow restrained push-in with subtle natural handheld movement.',\n  SubjectAction: 'One small natural movement demonstrates the product while its construction and proportions remain unchanged.',\n  EnvironmentMotion: 'Light rain and faint background motion remain natural and secondary to the product.',\n  Lighting: 'Soft overcast daylight with realistic reflections and restrained contrast.',\n  Audio: 'Environmental ambience only; no dialogue and no music.',\n  ContinuityAnchors: [\n    'Preserve exact product shape, color, proportions, construction, and visible features.',\n    'Preserve the supplied composition as the opening frame.',\n    'Keep all people, objects, and relative positions structurally unchanged.'\n  ],\n  ForbiddenChanges: [\n    'Invented text, price, discounts, badges, labels, or promotional graphics.',\n    'Product, face, hand, body, vehicle, or accessory morphing.',\n    'Extra people, objects, scene cuts, or unrealistic weather effects.'\n  ],\n  ScriptReference: {\n    Hook: creative.Script.Hook,\n    ProofFact: product.VerifiedFacts[0],\n    CTA: creative.Script.CTA\n  }\n};\nconst validation = {\n  ExactlyOneShot: true,\n  DurationSupported: shot.DurationSeconds >= 3 && shot.DurationSeconds <= 10,\n  Portrait: creative.Format.AspectRatio === '9:16',\n  HasReferenceAsset: Boolean(shot.ReferenceAsset),\n  HasContinuityAnchors: shot.ContinuityAnchors.length >= 3,\n  HasForbiddenChanges: shot.ForbiddenChanges.length >= 3,\n  UsesVerifiedFact: product.VerifiedFacts.includes(shot.ScriptReference.ProofFact),\n  NoGeneratedDialogue: shot.Audio.includes('no dialogue')\n};\nif (!Object.values(validation).every(Boolean)) {\n  throw new Error(`Storyboard validation failed: ${JSON.stringify(validation)}`);\n}\n\nreturn [{\n  json: {\n    ...input,\n    Creative: {\n      ...creative,\n      Storyboard: [shot],\n      StoryboardValidation: validation\n    }\n  }\n}];"
+        }
+      },
+      {
+        "id": "compile-adapter",
+        "name": "Video Generation Adapter — DISABLED",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1300,
+          100
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const input = $input.first().json;\nconst shot = input.Creative.Storyboard[0];\nconst validation = input.Creative.StoryboardValidation;\nif (!Object.values(validation).every(Boolean)) throw new Error('Refusing to compile an invalid storyboard');\n\nconst prompt = [\n  '<FIRST_FRAME>',\n  'Continuous unbroken portrait smartphone shot with no scene cuts.',\n  shot.Framing,\n  `Camera movement: ${shot.CameraMotion}`,\n  `Subject action: ${shot.SubjectAction}`,\n  `Environmental motion: ${shot.EnvironmentMotion}`,\n  `Lighting: ${shot.Lighting}`,\n  `Sound: ${shot.Audio}`,\n  `Continuity requirements: ${shot.ContinuityAnchors.join('; ')}`,\n  `Do not add: ${shot.ForbiddenChanges.join('; ')}`,\n  'Use the supplied product reference as the starting frame and keep everything else unchanged.'\n].join(' ');\n\nreturn [{\n  json: {\n    ...input,\n    GenerationAdapter: {\n      Status: 'DISABLED',\n      RequestStatus: 'COMPILED_NOT_SUBMITTED',\n      Provider: 'NOT_CONFIGURED',\n      Task: shot.Task,\n      Prompt: prompt,\n      RequestTemplate: {\n        Input: ['RIGHTS_CLEARED_REFERENCE_ASSET', 'VALIDATED_STORYBOARD_PROMPT'],\n        Output: 'VERTICAL_VIDEO_URI',\n        DurationSeconds: shot.DurationSeconds,\n        AspectRatio: input.Creative.Format.AspectRatio\n      },\n      RequiredProductionGates: [\n        'explicit per-run budget approval',\n        'approved provider model and terms',\n        'rights evidence',\n        'attributable human authorization'\n      ],\n      PaidGenerationRequests: 0,\n      PaidGenerationTriggered: false\n    }\n  }\n}];"
+        }
+      },
+      {
+        "id": "human-review",
+        "name": "Human Review Required — LOCKED",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          1640,
+          100
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const input = $input.first().json;\n\nreturn [{\n  json: {\n    ...input,\n    Approval: {\n      Status: 'REQUIRED_MANUAL_REVIEW',\n      Approved: false,\n      CanPublish: false,\n      RequiredReview: [\n        'actual rendered video and product fidelity',\n        'current product facts, seller, price, and availability',\n        'affiliate and synthetic-media disclosures',\n        'reference, music, and overlay rights',\n        'platform format, product tags, and caption',\n        'provider request receipt and final cost'\n      ],\n      NextProductionControl: 'Attributable approve or reject response tied to the exact media hash'\n    }\n  }\n}];"
+        }
+      },
+      {
+        "id": "build-handoff",
+        "name": "Build Shopee Video Handoff Preview",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2340,
+          100
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const input = $input.first().json;\n\nreturn [{\n  json: {\n    ...input,\n    Handoff: {\n      Platform: 'shopee_video',\n      Mode: 'MANUAL_REVIEW_PACKAGE',\n      DirectPostingEnabled: false,\n      VideoAttached: false,\n      ProductTagAttached: false,\n      CaptionPreview: `${input.Creative.Script.SpokenCopy} ${input.Creative.Script.Disclosure}`,\n      Checklist: input.Approval.RequiredReview,\n      Status: 'BLOCKED_PENDING_GENERATION_AND_HUMAN_APPROVAL'\n    }\n  }\n}];"
+        }
+      },
+      {
+        "id": "final-output",
+        "name": "Output — NOT PUBLISHED",
+        "type": "n8n-nodes-base.code",
+        "typeVersion": 2,
+        "position": [
+          2660,
+          100
+        ],
+        "parameters": {
+          "mode": "runOnceForAllItems",
+          "jsCode": "const input = $input.first().json;\n\nreturn [{\n  json: {\n    status: 'NOT_PUBLISHED',\n    selectedCandidateId: input.SelectedCandidate.CandidateId,\n    selectedProductName: input.SelectedCandidate.ProductName,\n    candidateCount: input.CandidateCount,\n    eligibleCount: input.EligibleCount,\n    paidGenerationRequests: input.GenerationAdapter.PaidGenerationRequests,\n    paidGenerationTriggered: input.GenerationAdapter.PaidGenerationTriggered,\n    publishingTriggered: false,\n    humanApprovalRequired: input.Approval.Status === 'REQUIRED_MANUAL_REVIEW',\n    platform: input.Handoff.Platform\n  }\n}];"
+        }
+      }
+    ],
+    "connections": {
+      "Manual Trigger — Offline Demo": {
+        "main": [
+          [
+            {
+              "node": "Load Fictional Candidate Queue",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Load Fictional Candidate Queue": {
+        "main": [
+          [
+            {
+              "node": "Extract Fields & Score Candidates",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Extract Fields & Score Candidates": {
+        "main": [
+          [
+            {
+              "node": "Rank & Select Top Candidate",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Rank & Select Top Candidate": {
+        "main": [
+          [
+            {
+              "node": "Build Hook-Proof-CTA Script",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Build Hook-Proof-CTA Script": {
+        "main": [
+          [
+            {
+              "node": "Build & Validate Storyboard",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Build & Validate Storyboard": {
+        "main": [
+          [
+            {
+              "node": "Video Generation Adapter — DISABLED",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Video Generation Adapter — DISABLED": {
+        "main": [
+          [
+            {
+              "node": "Human Review Required — LOCKED",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Human Review Required — LOCKED": {
+        "main": [
+          [
+            {
+              "node": "Build Shopee Video Handoff Preview",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      },
+      "Build Shopee Video Handoff Preview": {
+        "main": [
+          [
+            {
+              "node": "Output — NOT PUBLISHED",
+              "type": "main",
+              "index": 0
+            }
+          ]
+        ]
+      }
+    },
+    "settings": {
+      "executionOrder": "v1",
+      "saveManualExecutions": false,
+      "saveDataErrorExecution": "none",
+      "saveDataSuccessExecution": "none",
+      "saveExecutionProgress": false
+    },
+    "meta": {
+      "publicPortfolioArtifact": true,
+      "fictionalDataOnly": true,
+      "credentialsEmbedded": false,
+      "networkCallsEnabled": false,
+      "paidGenerationEnabled": false,
+      "publishingEnabled": false,
+      "version": "0.1.0"
+    },
+    "tags": []
+  }
+]

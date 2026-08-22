@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="640" viewBox="0 0 1280 640" role="img" aria-labelledby="title desc">
+  <title id="title">Shopee affiliate video automation architecture</title>
+  <desc id="desc">An offline product selection and creative planning workflow that stops before paid generation and publishing.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#091426"/>
+      <stop offset="1" stop-color="#162843"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="10" flood-color="#020617" flood-opacity="0.45"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#93C5FD"/>
+    </marker>
+  </defs>
+  <rect width="1280" height="640" rx="30" fill="url(#bg)"/>
+  <circle cx="1120" cy="90" r="180" fill="#EA4B71" opacity="0.10"/>
+  <circle cx="120" cy="610" r="240" fill="#38BDF8" opacity="0.08"/>
+
+  <text x="64" y="74" fill="#F8FAFC" font-family="Inter,Arial,sans-serif" font-size="34" font-weight="700">Shopee Affiliate Video Automation</text>
+  <text x="64" y="108" fill="#A7B6CC" font-family="Inter,Arial,sans-serif" font-size="17">Offline recruiter demo · explainable ranking · generation disabled · human approval required</text>
+
+  <g filter="url(#shadow)" font-family="Inter,Arial,sans-serif">
+    <rect x="64" y="174" width="210" height="142" rx="18" fill="#17324F" stroke="#38BDF8"/>
+    <text x="88" y="210" fill="#7DD3FC" font-size="14" font-weight="700">01 · INPUT</text>
+    <text x="88" y="244" fill="#F8FAFC" font-size="20" font-weight="700">Candidate text</text>
+    <text x="88" y="274" fill="#C7D2E0" font-size="14">Fictional fixtures</text>
+    <text x="88" y="297" fill="#C7D2E0" font-size="14">Facts + rights evidence</text>
+
+    <rect x="326" y="174" width="210" height="142" rx="18" fill="#17324F" stroke="#38BDF8"/>
+    <text x="350" y="210" fill="#7DD3FC" font-size="14" font-weight="700">02 · DECIDE</text>
+    <text x="350" y="244" fill="#F8FAFC" font-size="20" font-weight="700">Extract + rank</text>
+    <text x="350" y="274" fill="#C7D2E0" font-size="14">Visible weights</text>
+    <text x="350" y="297" fill="#C7D2E0" font-size="14">Deterministic tie-break</text>
+
+    <rect x="588" y="174" width="210" height="142" rx="18" fill="#17324F" stroke="#A78BFA"/>
+    <text x="612" y="210" fill="#C4B5FD" font-size="14" font-weight="700">03 · PLAN</text>
+    <text x="612" y="244" fill="#F8FAFC" font-size="20" font-weight="700">Script + storyboard</text>
+    <text x="612" y="274" fill="#C7D2E0" font-size="14">Source-grounded claims</text>
+    <text x="612" y="297" fill="#C7D2E0" font-size="14">Continuity constraints</text>
+
+    <rect x="850" y="174" width="210" height="142" rx="18" fill="#3A2532" stroke="#FB7185"/>
+    <text x="874" y="210" fill="#FDA4AF" font-size="14" font-weight="700">04 · STOP</text>
+    <text x="874" y="244" fill="#F8FAFC" font-size="20" font-weight="700">Generation disabled</text>
+    <text x="874" y="274" fill="#C7D2E0" font-size="14">0 paid requests</text>
+    <text x="874" y="297" fill="#C7D2E0" font-size="14">No provider configured</text>
+
+    <rect x="1112" y="174" width="104" height="142" rx="18" fill="#3A2532" stroke="#FB7185"/>
+    <text x="1134" y="210" fill="#FDA4AF" font-size="14" font-weight="700">05</text>
+    <text x="1134" y="245" fill="#F8FAFC" font-size="17" font-weight="700">Human</text>
+    <text x="1134" y="268" fill="#F8FAFC" font-size="17" font-weight="700">review</text>
+    <text x="1134" y="297" fill="#FDA4AF" font-size="13">LOCKED</text>
+  </g>
+
+  <g stroke="#93C5FD" stroke-width="3" fill="none" marker-end="url(#arrow)">
+    <path d="M 274 245 L 316 245"/>
+    <path d="M 536 245 L 578 245"/>
+    <path d="M 798 245 L 840 245"/>
+    <path d="M 1060 245 L 1102 245"/>
+  </g>
+
+  <g filter="url(#shadow)" font-family="Inter,Arial,sans-serif">
+    <rect x="326" y="384" width="472" height="142" rx="18" fill="#132E29" stroke="#34D399"/>
+    <text x="354" y="421" fill="#6EE7B7" font-size="14" font-weight="700">06 · MANUAL HANDOFF PREVIEW</text>
+    <text x="354" y="457" fill="#F8FAFC" font-size="22" font-weight="700">Shopee Video review package</text>
+    <text x="354" y="488" fill="#C7D2E0" font-size="15">Caption + disclosure + checklist · no upload integration</text>
+
+    <rect x="850" y="384" width="366" height="142" rx="18" fill="#44212B" stroke="#FB7185" stroke-width="2"/>
+    <text x="878" y="422" fill="#FDA4AF" font-size="14" font-weight="700">FINAL RECEIPT</text>
+    <text x="878" y="466" fill="#FFF1F2" font-size="30" font-weight="800">NOT PUBLISHED</text>
+    <text x="878" y="496" fill="#FBCFE8" font-size="15">publishingTriggered: false</text>
+  </g>
+
+  <path d="M 1164 326 C 1164 354, 1150 356, 1150 374" stroke="#93C5FD" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 798 455 L 840 455" stroke="#93C5FD" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+  <path d="M 562 374 C 562 346, 693 346, 693 326" stroke="#93C5FD" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+
+  <text x="64" y="594" fill="#8FA2BA" font-family="Inter,Arial,sans-serif" font-size="14">No credentials · No marketplace scraping · No network nodes · No generated media · No revenue claims</text>
+</svg>

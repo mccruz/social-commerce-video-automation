@@ -1,0 +1,12 @@
+{
+  "status": "NOT_PUBLISHED",
+  "selectedCandidateId": "DEMO-COMMUTER-001",
+  "selectedProductName": "All-Weather Commuter Rain Cover",
+  "candidateCount": 3,
+  "eligibleCount": 3,
+  "paidGenerationRequests": 0,
+  "paidGenerationTriggered": false,
+  "publishingTriggered": false,
+  "humanApprovalRequired": true,
+  "platform": "shopee_video"
+}

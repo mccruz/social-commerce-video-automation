@@ -1,0 +1,16 @@
+{
+  "name": "shopee-affiliate-video-automation",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Offline recruiter demo of an n8n affiliate-video candidate ranking and creative-planning workflow",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-workflow.mjs",
+    "check": "node scripts/check-workflow.mjs",
+    "test": "npm run build && npm run check && node --test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "license": "MIT"
+}
