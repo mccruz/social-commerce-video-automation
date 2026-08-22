@@ -21,6 +21,7 @@ const candidates = [
     ImageRightsEvidence: 'fictional-demo-asset',
     ReferenceAsset: 'fictional://commuter-rain-cover',
     Disclosure: '#ad #Affiliate',
+    TargetPlatform: 'affiliate_network',
     ScoringMonth: 8
   },
   {
@@ -45,6 +46,7 @@ const candidates = [
     ImageRightsEvidence: 'fictional-demo-asset',
     ReferenceAsset: 'fictional://travel-tumbler',
     Disclosure: '#ad #Affiliate',
+    TargetPlatform: 'affiliate_network',
     ScoringMonth: 8
   },
   {
@@ -69,6 +71,7 @@ const candidates = [
     ImageRightsEvidence: 'fictional-demo-asset',
     ReferenceAsset: 'fictional://backpack-cover',
     Disclosure: '#ad #Affiliate',
+    TargetPlatform: 'affiliate_network',
     ScoringMonth: 8
   }
 ];

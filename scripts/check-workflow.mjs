@@ -4,7 +4,7 @@ import process from 'node:process';
 import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const workflowPath = path.join(root, 'workflows', 'shopee-affiliate-video-demo.json');
+const workflowPath = path.join(root, 'workflows', 'affiliate-video-automation-demo.json');
 const raw = fs.readFileSync(workflowPath, 'utf8');
 
 const forbiddenPatterns = [
@@ -15,7 +15,7 @@ const forbiddenPatterns = [
   ['Google document reference', /(?:documentId|spreadsheetId|spreadsheets\/d\/)/i],
   ['cloud project identifier', /(?:projectId|googleCloudProject)/i],
   ['service-account address', /iam\.gserviceaccount\.com/i],
-  ['affiliate link', /(?:s\.shopee\.|shopee\.[a-z.]+\/product)/i],
+  ['live affiliate link', /(?:https?:\/\/(?!example\.(?:com|invalid))[^\s"']+)/i],
   ['authorization secret shape', /(?:bearer\s+[a-z0-9._-]+|api[_ -]?key|client[_ -]?secret|password|access[_ -]?token)/i],
   ['private filesystem path', /(?:\/Users\/|\/home\/|\/files\/)/],
   ['generated media file', /\.(?:mp4|mov|webm)\b/i],

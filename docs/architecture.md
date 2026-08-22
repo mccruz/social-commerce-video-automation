@@ -11,7 +11,7 @@ flowchart LR
     E --> F[Script and storyboard]
     F --> G[Generation adapter disabled]
     G --> H[Human review required]
-    H --> I[Shopee Video handoff preview]
+    H --> I[Affiliate-platform handoff preview]
     I --> J[NOT PUBLISHED]
 ```
 
@@ -81,7 +81,7 @@ A production approval should be attributable and should inspect:
 - platform-specific format and tagging;
 - paid-request receipt and estimated cost.
 
-The Shopee Video node prepares only a manual handoff preview. The last node always returns `NOT_PUBLISHED`.
+The affiliate-platform node prepares only a configurable manual handoff preview. The last node always returns `NOT_PUBLISHED`.
 
 ## Production extension points
 
@@ -94,6 +94,6 @@ The safe production sequence is staged:
 5. add a paid generation adapter behind an explicit per-run budget authorization;
 6. add media metadata and product-fidelity QA;
 7. add an attributable approve/reject wait state;
-8. keep Shopee posting manual until an approved publishing integration is available.
+8. keep platform posting manual until an approved network-specific publishing integration is available.
 
 Each stage should be testable independently and should preserve the inactive, zero-cost default.

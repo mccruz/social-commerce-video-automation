@@ -4,7 +4,7 @@ return [{
   json: {
     ...input,
     Handoff: {
-      Platform: 'shopee_video',
+      Platform: input.TargetPlatform || 'affiliate_network',
       Mode: 'MANUAL_REVIEW_PACKAGE',
       DirectPostingEnabled: false,
       VideoAttached: false,

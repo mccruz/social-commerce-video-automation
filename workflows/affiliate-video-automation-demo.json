@@ -1,6 +1,6 @@
 [
   {
-    "name": "Shopee Affiliate Video Automation — Offline Recruiter Demo",
+    "name": "Affiliate Video Automation — Offline Recruiter Demo",
     "active": false,
     "nodes": [
       {
@@ -13,7 +13,7 @@
           -500
         ],
         "parameters": {
-          "content": "## Shopee Affiliate Video Automation\n\n**Flow:** fictional product text → extraction → deterministic ranking → script → storyboard → disabled generation receipt → human review → Shopee Video handoff preview.\n\n**Safety state:** inactive, credential-free, offline, zero paid calls, and no publishing nodes.",
+          "content": "## Affiliate Video Automation\n\n**Flow:** fictional product text → extraction → deterministic ranking → script → storyboard → disabled generation receipt → human review → configurable affiliate-platform handoff preview.\n\n**Safety state:** inactive, credential-free, offline, zero paid calls, and no publishing nodes.",
           "width": 760,
           "height": 300,
           "color": 7
@@ -69,7 +69,7 @@
       },
       {
         "id": "note-stage-4",
-        "name": "4 — Manual Shopee Video handoff",
+        "name": "4 — Manual affiliate-platform handoff",
         "type": "n8n-nodes-base.stickyNote",
         "typeVersion": 1,
         "position": [
@@ -105,7 +105,7 @@
         ],
         "parameters": {
           "mode": "runOnceForAllItems",
-          "jsCode": "const candidates = [\n  {\n    CandidateId: 'DEMO-COMMUTER-001',\n    RawListingText: [\n      'Title: All-Weather Commuter Rain Cover',\n      'Category: Motorcycle Rain Gear',\n      'Price: PHP 699',\n      'Sold: 3.2K',\n      'Rating: 4.8',\n      'Reviews: 890',\n      'Description: Waterproof windproof commuter cover with reflective panels, compact storage pouch, adjustable cuffs, and breathable lining.'\n    ].join('\\n'),\n    RawAffiliateMetrics: 'Commission rate: 15%',\n    VerifiedFacts: [\n      'Waterproof outer layer',\n      'Reflective panels',\n      'Compact storage pouch'\n    ],\n    FactsVerified: true,\n    RightsConfirmed: true,\n    ImageRightsEvidence: 'fictional-demo-asset',\n    ReferenceAsset: 'fictional://commuter-rain-cover',\n    Disclosure: '#ad #Affiliate',\n    ScoringMonth: 8\n  },\n  {\n    CandidateId: 'DEMO-COMMUTER-002',\n    RawListingText: [\n      'Title: Leak-Resistant Insulated Travel Tumbler',\n      'Category: Commuter Drinkware',\n      'Price: PHP 499',\n      'Sold: 8.4K',\n      'Rating: 4.7',\n      'Reviews: 2.1K',\n      'Description: Portable insulated bottle with anti-slip base, adjustable carry loop, and compact cup-holder shape.'\n    ].join('\\n'),\n    RawAffiliateMetrics: 'Commission rate: 12%',\n    VerifiedFacts: [\n      'Insulated body',\n      'Anti-slip base',\n      'Adjustable carry loop'\n    ],\n    FactsVerified: true,\n    RightsConfirmed: true,\n    ImageRightsEvidence: 'fictional-demo-asset',\n    ReferenceAsset: 'fictional://travel-tumbler',\n    Disclosure: '#ad #Affiliate',\n    ScoringMonth: 8\n  },\n  {\n    CandidateId: 'DEMO-COMMUTER-003',\n    RawListingText: [\n      'Title: Reflective Waterproof Backpack Cover',\n      'Category: Bag Accessories',\n      'Price: PHP 249',\n      'Sold: 15K',\n      'Rating: 4.6',\n      'Reviews: 3.6K',\n      'Description: Lightweight waterproof backpack cover with reflective safety strip, adjustable elastic edge, and foldable storage bag.'\n    ].join('\\n'),\n    RawAffiliateMetrics: 'Commission rate: 10%',\n    VerifiedFacts: [\n      'Waterproof cover',\n      'Reflective safety strip',\n      'Foldable storage bag'\n    ],\n    FactsVerified: true,\n    RightsConfirmed: true,\n    ImageRightsEvidence: 'fictional-demo-asset',\n    ReferenceAsset: 'fictional://backpack-cover',\n    Disclosure: '#ad #Affiliate',\n    ScoringMonth: 8\n  }\n];\n\nreturn candidates.map(candidate => ({\n  json: {\n    ...candidate,\n    InputMode: 'FICTIONAL_USER_SUPPLIED_TEXT',\n    MarketplaceQueried: false,\n    PaidGenerationTriggered: false,\n    PublishingTriggered: false\n  }\n}));"
+          "jsCode": "const candidates = [\n  {\n    CandidateId: 'DEMO-COMMUTER-001',\n    RawListingText: [\n      'Title: All-Weather Commuter Rain Cover',\n      'Category: Motorcycle Rain Gear',\n      'Price: PHP 699',\n      'Sold: 3.2K',\n      'Rating: 4.8',\n      'Reviews: 890',\n      'Description: Waterproof windproof commuter cover with reflective panels, compact storage pouch, adjustable cuffs, and breathable lining.'\n    ].join('\\n'),\n    RawAffiliateMetrics: 'Commission rate: 15%',\n    VerifiedFacts: [\n      'Waterproof outer layer',\n      'Reflective panels',\n      'Compact storage pouch'\n    ],\n    FactsVerified: true,\n    RightsConfirmed: true,\n    ImageRightsEvidence: 'fictional-demo-asset',\n    ReferenceAsset: 'fictional://commuter-rain-cover',\n    Disclosure: '#ad #Affiliate',\n    TargetPlatform: 'affiliate_network',\n    ScoringMonth: 8\n  },\n  {\n    CandidateId: 'DEMO-COMMUTER-002',\n    RawListingText: [\n      'Title: Leak-Resistant Insulated Travel Tumbler',\n      'Category: Commuter Drinkware',\n      'Price: PHP 499',\n      'Sold: 8.4K',\n      'Rating: 4.7',\n      'Reviews: 2.1K',\n      'Description: Portable insulated bottle with anti-slip base, adjustable carry loop, and compact cup-holder shape.'\n    ].join('\\n'),\n    RawAffiliateMetrics: 'Commission rate: 12%',\n    VerifiedFacts: [\n      'Insulated body',\n      'Anti-slip base',\n      'Adjustable carry loop'\n    ],\n    FactsVerified: true,\n    RightsConfirmed: true,\n    ImageRightsEvidence: 'fictional-demo-asset',\n    ReferenceAsset: 'fictional://travel-tumbler',\n    Disclosure: '#ad #Affiliate',\n    TargetPlatform: 'affiliate_network',\n    ScoringMonth: 8\n  },\n  {\n    CandidateId: 'DEMO-COMMUTER-003',\n    RawListingText: [\n      'Title: Reflective Waterproof Backpack Cover',\n      'Category: Bag Accessories',\n      'Price: PHP 249',\n      'Sold: 15K',\n      'Rating: 4.6',\n      'Reviews: 3.6K',\n      'Description: Lightweight waterproof backpack cover with reflective safety strip, adjustable elastic edge, and foldable storage bag.'\n    ].join('\\n'),\n    RawAffiliateMetrics: 'Commission rate: 10%',\n    VerifiedFacts: [\n      'Waterproof cover',\n      'Reflective safety strip',\n      'Foldable storage bag'\n    ],\n    FactsVerified: true,\n    RightsConfirmed: true,\n    ImageRightsEvidence: 'fictional-demo-asset',\n    ReferenceAsset: 'fictional://backpack-cover',\n    Disclosure: '#ad #Affiliate',\n    TargetPlatform: 'affiliate_network',\n    ScoringMonth: 8\n  }\n];\n\nreturn candidates.map(candidate => ({\n  json: {\n    ...candidate,\n    InputMode: 'FICTIONAL_USER_SUPPLIED_TEXT',\n    MarketplaceQueried: false,\n    PaidGenerationTriggered: false,\n    PublishingTriggered: false\n  }\n}));"
         }
       },
       {
@@ -194,7 +194,7 @@
       },
       {
         "id": "build-handoff",
-        "name": "Build Shopee Video Handoff Preview",
+        "name": "Build Affiliate Platform Handoff Preview",
         "type": "n8n-nodes-base.code",
         "typeVersion": 2,
         "position": [
@@ -203,7 +203,7 @@
         ],
         "parameters": {
           "mode": "runOnceForAllItems",
-          "jsCode": "const input = $input.first().json;\n\nreturn [{\n  json: {\n    ...input,\n    Handoff: {\n      Platform: 'shopee_video',\n      Mode: 'MANUAL_REVIEW_PACKAGE',\n      DirectPostingEnabled: false,\n      VideoAttached: false,\n      ProductTagAttached: false,\n      CaptionPreview: `${input.Creative.Script.SpokenCopy} ${input.Creative.Script.Disclosure}`,\n      Checklist: input.Approval.RequiredReview,\n      Status: 'BLOCKED_PENDING_GENERATION_AND_HUMAN_APPROVAL'\n    }\n  }\n}];"
+          "jsCode": "const input = $input.first().json;\n\nreturn [{\n  json: {\n    ...input,\n    Handoff: {\n      Platform: input.TargetPlatform || 'affiliate_network',\n      Mode: 'MANUAL_REVIEW_PACKAGE',\n      DirectPostingEnabled: false,\n      VideoAttached: false,\n      ProductTagAttached: false,\n      CaptionPreview: `${input.Creative.Script.SpokenCopy} ${input.Creative.Script.Disclosure}`,\n      Checklist: input.Approval.RequiredReview,\n      Status: 'BLOCKED_PENDING_GENERATION_AND_HUMAN_APPROVAL'\n    }\n  }\n}];"
         }
       },
       {
@@ -303,14 +303,14 @@
         "main": [
           [
             {
-              "node": "Build Shopee Video Handoff Preview",
+              "node": "Build Affiliate Platform Handoff Preview",
               "type": "main",
               "index": 0
             }
           ]
         ]
       },
-      "Build Shopee Video Handoff Preview": {
+      "Build Affiliate Platform Handoff Preview": {
         "main": [
           [
             {
