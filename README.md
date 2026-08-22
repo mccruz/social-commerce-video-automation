@@ -1,146 +1,119 @@
 # Social Commerce Video Automation
 
-> A recruiter-friendly n8n demo that turns user-supplied product details into an explainable product ranking, source-grounded short-form script, storyboard, and locked multi-platform handoff preview.
+An offline n8n demo that ranks fictional products, creates a supported
+short-form video plan, and prepares a human-reviewed handoff without generating
+or publishing content.
 
-[![n8n](https://img.shields.io/badge/built%20with-n8n-EA4B71.svg)](https://n8n.io/) [![Demo](https://img.shields.io/badge/demo-offline%20and%20credential--free-2D6A4F.svg)](docs/demo-guide.md) [![Generation](https://img.shields.io/badge/video%20generation-disabled-6B7280.svg)](docs/architecture.md) [![License: MIT](https://img.shields.io/badge/license-MIT-0B7F5C.svg)](LICENSE)
+[![n8n](https://img.shields.io/badge/built%20with-n8n-EA4B71.svg)](https://n8n.io/)
+[![Demo](https://img.shields.io/badge/demo-offline%20and%20credential--free-2D6A4F.svg)](docs/demo-guide.md)
+[![License: MIT](https://img.shields.io/badge/license-MIT-0B7F5C.svg)](LICENSE)
 
-![Architecture showing fictional product input, extraction, deterministic ranking, creative planning, disabled generation, human review, and a not-published output](assets/architecture.svg)
-
-The project demonstrates an automation pattern for affiliate content operations without scraping a marketplace, making a paid AI call, or publishing content. It is designed for automation and implementation roles: the interesting work is the orchestration, evidence gates, deterministic decision logic, cost boundary, and human-in-the-loop handoff.
+![Architecture showing fictional product input, explainable ranking, creative planning, human review, and a not-published output](assets/architecture.svg)
 
 ## Review this project in 3 minutes
 
-1. Follow the architecture diagram from fictional product text to the locked handoff preview.
-2. Scan the [business controls](#business-controls) and [design decisions](#design-decisions).
-3. Open the [importable n8n workflow](workflows/social-commerce-video-automation-demo.json) or read the [architecture notes](docs/architecture.md).
-4. See the [verification record](docs/verification.md) for the exact checks run.
+No setup is required:
 
-Running n8n is optional. The repository includes an offline test harness that executes the same JavaScript embedded in the workflow.
+1. Follow the diagram from fictional product details to the final handoff.
+2. Read [How it works](#how-it-works) and
+   [Important controls](#important-controls).
+3. Open the [workflow](workflows/social-commerce-video-automation-demo.json),
+   [architecture notes](docs/architecture.md), or
+   [verification record](docs/verification.md) for more detail.
 
-## The business problem
+## The problem
 
-Affiliate content production has several separate decisions that are easy to blur together:
+Social-commerce content requires several different decisions: which product to
+test, which facts are supported, whether supplied media can be used, what the
+video should show, and whether a person has approved the result. Combining all
+of those decisions inside one AI prompt makes the process difficult to review.
 
-- Which products are worth testing?
-- Which product facts are sufficiently supported?
-- Can the supplied media be used?
-- What should the video show and say?
-- Is a paid generation request authorized?
-- Has a person reviewed the final media and disclosure?
+This workflow separates them into visible steps. Fixed rules select a product,
+the content plan uses only reviewed facts, and the process stops before any paid
+generation or publishing action.
 
-This workflow makes each decision visible. Product selection is deterministic and explainable. Creative planning uses only reviewed facts. Video generation remains disabled. The final node explicitly reports that nothing was published.
+## How it works
 
-## The workflow in plain English
-
-1. **Load fictional candidate text.** Three commuter-product fixtures simulate rows that could come from a reviewed Google Sheet.
-2. **Extract and validate fields.** Parse price, commission, sales, ratings, reviews, category, and product features from user-supplied text.
-3. **Score and rank products.** Combine commission economics, demand, trust, commuter fit, video fit, angle depth, and seasonality using visible weights.
-4. **Create the content plan.** Build a hook-proof-CTA script, one-shot storyboard, continuity constraints, and a provider-neutral video prompt.
-5. **Stop before generation.** Record a disabled generation adapter with zero paid calls.
-6. **Require human review.** Block publishing until facts, rights, affiliate disclosure, product fidelity, and final media are reviewed.
-7. **Prepare a multi-platform preview.** Produce a configurable manual handoff package and end at `NOT_PUBLISHED`.
+1. Load fictional product details that represent reviewed source data.
+2. Convert the supplied text into consistent product fields.
+3. Check that required facts and media rights are present.
+4. Rank eligible products with visible scoring rules.
+5. Build a hook, script, storyboard, and video brief from supported facts.
+6. Stop before video generation and require human review.
+7. Prepare a manual multi-platform handoff marked `NOT_PUBLISHED`.
 
 ## What this demonstrates
 
-| Automation need | Workflow response |
-| --- | --- |
-| Product data arrives as semi-structured text | Parse it into a consistent candidate schema |
-| Selection should be explainable | Use explicit weights and per-candidate score components |
-| High sales should not override weak evidence | Require fact and image-rights gates before eligibility |
-| AI video can alter product details | Add continuity anchors, forbidden changes, and mandatory final-media review |
-| Paid generation needs a boundary | Keep the adapter disabled and report zero submitted requests |
-| Affiliate content needs disclosure | Include disclosure in the script and handoff checklist |
-| Platform posting is not yet integrated | End in a manual multi-platform package marked `NOT_PUBLISHED` |
+- Explainable product ranking instead of an AI-selected winner.
+- Structured extraction from semi-formatted user input.
+- Evidence and media-rights checks before creative work begins.
+- Clear boundaries around paid model calls and publishing actions.
+- A human approval step for facts, product fidelity, disclosure, and final
+  media.
+- A credential-free n8n workflow and offline test harness.
 
-## Business controls
+## Important controls
 
-- **No marketplace scraping.** The demo parses only supplied text. A production intake should use an approved API or a reviewed manual input process.
-- **Deterministic ranking.** The same candidate inputs and scoring month produce the same result.
-- **Evidence before eligibility.** A candidate cannot rank unless facts and media rights are confirmed.
-- **Source-grounded copy.** The script uses verified facts and blocks unverified superlatives, scarcity, prices, and guarantees.
-- **Zero-cost demo.** There are no HTTP, Google Sheets, Gemini, or publishing nodes in the public workflow.
-- **Human approval cannot be bypassed.** The final preview remains non-publishable even when upstream checks pass.
-- **Synthetic media disclosure.** A production handoff must identify AI-generated footage and follow current platform and advertising requirements.
+- **No marketplace scraping.** The demo reads only supplied fictional text.
+- **Repeatable ranking.** The same inputs and scoring month produce the same
+  order.
+- **Supported claims only.** The script blocks unverified prices, guarantees,
+  scarcity, and superlatives.
+- **No paid generation.** The public adapter is disabled and records zero
+  submitted requests.
+- **No automatic publishing.** The final output is a review package, not a
+  platform post.
+- **Disclosure remains required.** A production reviewer must confirm current
+  affiliate and synthetic-media disclosure requirements.
 
-## Design decisions
+## Optional offline demo
 
-### Why rules before an AI agent
-
-Product ranking is a structured decision. Fixed formulas make the outcome reproducible, inexpensive, and easy to audit. A future language model can suggest creative angles, but it should not silently override evidence, rights, or eligibility gates.
-
-### Why storyboard before generation
-
-The storyboard separates camera movement, subject action, environmental motion, continuity anchors, and prohibited changes. That gives a video model a constrained single-shot brief and gives the human reviewer a concrete fidelity checklist.
-
-### Why the public workflow is offline
-
-A raw live export would expose more operational detail than recruiters need. This clean derivative preserves the architecture and decision logic while replacing external integrations, identifiers, credentials, real links, and media with fictional fixtures.
-
-## Run the offline demo
-
-### Option 1: automated verification
+The demo requires Node.js but no credentials, network access, marketplace
+account, or model subscription.
 
 ```bash
 npm test
 ```
 
-Expected final status:
+The final output should show that one fictional candidate was selected, zero
+paid generation requests were submitted, and publishing was not triggered.
 
-```json
-{
-  "status": "NOT_PUBLISHED",
-  "selectedCandidateId": "DEMO-COMMUTER-001",
-  "paidGenerationRequests": 0,
-  "publishingTriggered": false
-}
-```
+To inspect the workflow in n8n:
 
-### Option 2: import into n8n
+1. Import
+   [`workflows/social-commerce-video-automation-demo.json`](workflows/social-commerce-video-automation-demo.json)
+   into n8n 2.x.
+2. Open **Social Commerce Video Automation — Offline Recruiter Demo**.
+3. Select **Execute workflow**.
+4. Inspect **Output — NOT PUBLISHED**.
 
-1. Use n8n 2.x.
-2. Import [`workflows/social-commerce-video-automation-demo.json`](workflows/social-commerce-video-automation-demo.json).
-3. Open **Social Commerce Video Automation — Offline Recruiter Demo**.
-4. Select **Execute workflow**.
-5. Inspect **Output — NOT PUBLISHED**.
+See the [demo guide](docs/demo-guide.md) for the complete walkthrough.
 
-No credentials, network access, API key, marketplace account, or paid model subscription is required. See the [demo guide](docs/demo-guide.md).
+## Public demo boundary
 
-## Repository map
+The repository is a clean portfolio demonstration, not a production export. It
+uses fictional products, sellers, metrics, links, and media references. It does
+not retrieve current marketplace data, write to Google Sheets, generate video,
+upload media, or publish to a platform.
 
-```text
-assets/architecture.svg                     Recruiter-facing system overview
-assets/social-preview.png                   1280×640 repository preview asset
-docs/architecture.md                        Detailed flow and tradeoffs
-docs/demo-guide.md                          Import and demo walkthrough
-docs/provenance.md                          Public/private derivation boundary
-docs/verification.md                        Checks and evidence boundary
-examples/expected-output.json               Deterministic demo contract
-scripts/build-workflow.mjs                  Builds the importable workflow
-scripts/check-workflow.mjs                  Privacy and structure checks
-tests/workflow.test.mjs                     Offline end-to-end execution
-workflow_code/*.js                          Reviewable n8n Code-node logic
-workflows/social-commerce-video-automation-demo.json  Generated credential-free workflow
-```
+A production version would need approved data access, attributable human
+approval, current advertising and platform-policy checks, and monitored
+generation and publishing integrations. Ranking scores would also need human
+calibration against real outcomes; this demo does not claim that a score
+predicts revenue.
 
-## Deliberate limitations
+## Project guide
 
-- The demo does not retrieve current marketplace data or affiliate metrics.
-- It does not write extracted fields back to Google Sheets.
-- Heuristic content-fit scores need human calibration against conversion data.
-- It does not generate, host, upload, or publish video.
-- It does not claim that ranking score predicts revenue.
-- Platform rules, affiliate disclosures, model availability, and prices are time-sensitive and must be rechecked before production use.
+- [Architecture and design decisions](docs/architecture.md)
+- [Offline demo guide](docs/demo-guide.md)
+- [Verification record](docs/verification.md)
+- [Public/private boundary](docs/provenance.md)
+- [Expected output](examples/expected-output.json)
+- [Importable workflow](workflows/social-commerce-video-automation-demo.json)
 
-## Interview talking points
+## License and independence
 
-- How would you make candidate claiming idempotent when multiple n8n runs share one queue?
-- When should an LLM enrich deterministic ranking, and what may it never override?
-- How would you monitor extraction drift without storing sensitive raw source data?
-- What evidence should unlock a paid generation node?
-- How would you design an attributable approve/reject step before publishing?
-
-## Brand-neutral demo notice
-
-This independent portfolio project is not affiliated with or endorsed by any marketplace, social network, affiliate network, or video-generation provider. All products, sellers, metrics, URLs, and media references in the demo are fictional. Production use must follow the current rules of each selected network.
+This independent project is not affiliated with or endorsed by a marketplace,
+social network, affiliate network, or video-generation provider.
 
 Copyright © 2026 Mark Cruz. Released under the [MIT License](LICENSE).
