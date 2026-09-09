@@ -17,10 +17,13 @@ It performs these checks:
 5. compiles every Code node as JavaScript;
 6. executes the full offline path using the embedded Code-node source;
 7. compares the final result with the expected deterministic output;
-8. verifies local Markdown links.
+8. exercises invalid metrics, non-boolean verification flags, blank verified facts, and direct script-builder validation;
+9. verifies local Markdown links.
 
 ## Evidence interpretation
 
 A passing test validates the public demo and its privacy boundary. It does not validate live marketplace data, Google authentication, provider availability, video fidelity, posting APIs, or revenue performance.
 
-The exact local run result and commit are recorded when the publication candidate is finalized.
+On 2026-09-09, `npm test` passed all five tests using Node.js 22.23.1,
+including the invalid-input cases. This was a local Code-node harness run,
+not a new execution inside n8n.

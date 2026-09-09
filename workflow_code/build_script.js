@@ -1,6 +1,15 @@
-const input = $input.first().json;
+const input = $input.first()?.json ?? {};
 const product = input.SelectedCandidate;
+if (!product || typeof product !== 'object') {
+  throw new Error('SelectedCandidate is required to build the script');
+}
 const facts = product.VerifiedFacts;
+if (!Array.isArray(facts) || facts.length === 0 || facts.some(fact => typeof fact !== 'string' || fact.trim().length === 0)) {
+  throw new Error('SelectedCandidate.VerifiedFacts must be a non-empty array of non-blank strings');
+}
+if (typeof product.Category !== 'string' || product.Category.trim().length === 0) {
+  throw new Error('SelectedCandidate.Category must be a non-blank string');
+}
 const sentence = value => `${String(value).trim().replace(/[.!?]+$/, '')}.`;
 const hook = `Rainy commute? Here is one practical ${product.Category.toLowerCase()} option to review.`;
 const proof = `Fixture detail: ${sentence(facts[0])}`;

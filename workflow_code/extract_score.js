@@ -1,6 +1,8 @@
 const rows = $input.all().map(item => item.json);
 
 const clamp = value => Math.max(0, Math.min(100, value));
+const isNonBlankString = value => typeof value === 'string' && value.trim().length > 0;
+const isFiniteNumber = value => typeof value === 'number' && Number.isFinite(value);
 const parseNumber = value => {
   if (value === null || value === undefined || value === '') return null;
   const parsed = Number(String(value).replace(/,/g, '').replace(/[^0-9.+-]/g, ''));
@@ -50,17 +52,23 @@ return rows.map(row => {
   const reviewCount = parseCompact(pick(source, /(?:^|\n)\s*Reviews\s*:\s*([\d,.]+\s*[kKmM]?)/i));
 
   const missing = [];
-  if (!row.CandidateId) missing.push('CandidateId');
-  if (!productName) missing.push('ProductName');
-  if (!category) missing.push('Category');
-  if (!(price > 0)) missing.push('Price');
-  if (!(commissionPercent > 0)) missing.push('CommissionRate');
-  if (!(monthlySold >= 0)) missing.push('MonthlySold');
-  if (!(rating >= 1 && rating <= 5)) missing.push('Rating');
-  if (!(reviewCount >= 0)) missing.push('ReviewCount');
-  if (!row.FactsVerified) missing.push('FactsVerified');
-  if (!row.RightsConfirmed) missing.push('RightsConfirmed');
-  if (!row.ImageRightsEvidence) missing.push('ImageRightsEvidence');
+  if (!isNonBlankString(row.CandidateId)) missing.push('CandidateId');
+  if (!isNonBlankString(productName)) missing.push('ProductName');
+  if (!isNonBlankString(category)) missing.push('Category');
+  if (!isFiniteNumber(price) || !(price > 0)) missing.push('Price');
+  if (!isFiniteNumber(commissionPercent) || !(commissionPercent > 0 && commissionPercent <= 100)) missing.push('CommissionRate');
+  if (!isFiniteNumber(monthlySold) || !(monthlySold >= 0)) missing.push('MonthlySold');
+  if (!isFiniteNumber(rating) || !(rating >= 1 && rating <= 5)) missing.push('Rating');
+  if (!isFiniteNumber(reviewCount) || !(reviewCount >= 0)) missing.push('ReviewCount');
+  if (row.FactsVerified !== true) missing.push('FactsVerified');
+  if (row.RightsConfirmed !== true) missing.push('RightsConfirmed');
+  if (!isNonBlankString(row.ImageRightsEvidence)) missing.push('ImageRightsEvidence');
+  if (!Array.isArray(row.VerifiedFacts) || row.VerifiedFacts.length === 0 || row.VerifiedFacts.some(fact => !isNonBlankString(fact))) {
+    missing.push('VerifiedFacts');
+  }
+  if (!isFiniteNumber(row.ScoringMonth) || !Number.isInteger(row.ScoringMonth) || row.ScoringMonth < 1 || row.ScoringMonth > 12) {
+    missing.push('ScoringMonth');
+  }
 
   const estimatedCommission = price && commissionPercent ? price * (commissionPercent / 100) : null;
   const commuterFit = clamp(25 + countKeywords(lower, commuterWords) * 9);
