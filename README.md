@@ -1,8 +1,30 @@
-# Social Commerce Video Automation
+# Social Commerce Video Planning
 
-An offline n8n demo that ranks fictional products, creates a supported
-short-form video plan, and prepares a human-reviewed handoff without generating
-or publishing content.
+An offline n8n demo that helps a content operator choose a product to review
+and prepare a short video brief. It separates product evidence, creative
+planning, and human approval before paid generation or publishing.
+
+## Example result
+
+**Synthetic offline result:** three fictional candidates produce one selected
+product, **All-Weather Commuter Rain Cover**.
+
+| Deliverable | Example |
+| --- | --- |
+| Selection | Visible scoring rules choose one eligible candidate |
+| Storyboard | One 8-second portrait shot; slow push-in, light rain, product details preserved |
+| Reviewer decision | Check facts, media rights, disclosure, and the eventual rendered video |
+| Final status | `NOT_PUBLISHED`; zero paid generation requests |
+
+This is a video **plan**, not a generated video. Inspect the
+[expected result](examples/expected-output.json) and
+[storyboard construction](workflow_code/build_storyboard.js).
+
+## My contribution
+
+I built the input checks, deterministic ranking, script and storyboard
+construction, and locked review handoff. The public workflow uses fixed
+templates and rules; it makes no LLM or video-generation calls.
 
 [![n8n](https://img.shields.io/badge/built%20with-n8n-EA4B71.svg)](https://n8n.io/)
 [![Demo](https://img.shields.io/badge/demo-offline%20and%20credential--free-2D6A4F.svg)](docs/demo-guide.md)
@@ -10,16 +32,12 @@ or publishing content.
 
 ![Architecture showing fictional product input, explainable ranking, creative planning, human review, and a not-published output](assets/architecture.svg)
 
-## Review this project in 3 minutes
+<a id="review-this-project-in-3-minutes"></a>
 
-No setup is required:
+## Explore the project
 
-1. Follow the diagram from fictional product details to the final handoff.
-2. Read [How it works](#how-it-works) and
-   [Important controls](#important-controls).
-3. Open the [workflow](workflows/social-commerce-video-automation-demo.json),
-   [architecture notes](docs/architecture.md), or
-   [verification record](docs/verification.md) for more detail.
+Start with the example above, then follow the diagram and the
+[engineering evidence](#engineering-evidence). Setup is optional for review.
 
 ## The problem
 
@@ -42,23 +60,22 @@ generation or publishing action.
 6. Stop before video generation and require human review.
 7. Prepare a manual multi-platform handoff marked `NOT_PUBLISHED`.
 
-## What this demonstrates
+## Engineering evidence
 
-- Explainable product ranking instead of an AI-selected winner.
-- Structured extraction from semi-formatted user input.
-- Evidence and media-rights checks before creative work begins.
-- Clear boundaries around paid model calls and publishing actions.
-- A human approval step for facts, product fidelity, disclosure, and final
-  media.
-- A credential-free n8n workflow and offline test harness.
+| Capability | Implementation | Check |
+| --- | --- | --- |
+| Reject incomplete metrics and evidence | [Input gate](workflow_code/extract_score.js) | [Invalid-input tests](tests/workflow.test.mjs) |
+| Produce a repeatable selection | [Ranking](workflow_code/rank_select.js) | [Fixture and ranking assertions](tests/workflow.test.mjs) |
+| Require a review before publishing | [Locked review](workflow_code/human_review.js) | [Expected non-publishing output](examples/expected-output.json) |
 
 ## Important controls
 
 - **No marketplace scraping.** The demo reads only supplied fictional text.
 - **Repeatable ranking.** The same inputs and scoring month produce the same
   order.
-- **Supported claims only.** The script blocks unverified prices, guarantees,
-  scarcity, and superlatives.
+- **Reviewed facts and limited claim checks.** The script uses supplied verified
+  facts and rejects a fixed list of phrases such as “guaranteed” and “lowest
+  price.” A person must still confirm factual support and current pricing.
 - **No paid generation.** The public adapter is disabled and records zero
   submitted requests.
 - **No automatic publishing.** The final output is a review package, not a

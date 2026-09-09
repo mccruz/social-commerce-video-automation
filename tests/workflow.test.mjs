@@ -69,6 +69,76 @@ test('ranking is deterministic and keeps generation disabled', async () => {
   assert.equal(ranked[0].json.PublishingTriggered, false);
 });
 
+test('invalid metrics and evidence gates are ineligible', async () => {
+  const [fixture] = await executeCode('Load Fictional Candidate Queue', [{ json: {} }]);
+
+  const nullMetric = structuredClone(fixture);
+  nullMetric.json.RawListingText = nullMetric.json.RawListingText.replace('Sold: 3.2K', 'Sold: null');
+  const [nullMetricResult] = await executeCode('Extract Fields & Score Candidates', [nullMetric]);
+  assert.equal(nullMetricResult.json.MonthlySold, null);
+  assert.equal(nullMetricResult.json.Eligible, false);
+  assert.match(nullMetricResult.json.SelectionReason, /MonthlySold/);
+
+  const missingMetric = structuredClone(fixture);
+  missingMetric.json.RawListingText = missingMetric.json.RawListingText.replace('Rating: 4.8\n', '');
+  const [missingMetricResult] = await executeCode('Extract Fields & Score Candidates', [missingMetric]);
+  assert.equal(missingMetricResult.json.Rating, null);
+  assert.equal(missingMetricResult.json.Eligible, false);
+  assert.match(missingMetricResult.json.SelectionReason, /Rating/);
+
+  const missingSold = structuredClone(fixture);
+  missingSold.json.RawListingText = missingSold.json.RawListingText.replace('Sold: 3.2K\n', '');
+  const [missingSoldResult] = await executeCode('Extract Fields & Score Candidates', [missingSold]);
+  assert.equal(missingSoldResult.json.MonthlySold, null);
+  assert.equal(missingSoldResult.json.Eligible, false);
+  assert.match(missingSoldResult.json.SelectionReason, /MonthlySold/);
+
+  const missingReviews = structuredClone(fixture);
+  missingReviews.json.RawListingText = missingReviews.json.RawListingText.replace('Reviews: 890\n', '');
+  const [missingReviewsResult] = await executeCode('Extract Fields & Score Candidates', [missingReviews]);
+  assert.equal(missingReviewsResult.json.ReviewCount, null);
+  assert.equal(missingReviewsResult.json.Eligible, false);
+  assert.match(missingReviewsResult.json.SelectionReason, /ReviewCount/);
+
+  const stringFlag = structuredClone(fixture);
+  stringFlag.json.FactsVerified = 'false';
+  stringFlag.json.RightsConfirmed = 'false';
+  const [stringFlagResult] = await executeCode('Extract Fields & Score Candidates', [stringFlag]);
+  assert.equal(stringFlagResult.json.Eligible, false);
+  assert.match(stringFlagResult.json.SelectionReason, /FactsVerified/);
+  assert.match(stringFlagResult.json.SelectionReason, /RightsConfirmed/);
+
+  const emptyFact = structuredClone(fixture);
+  emptyFact.json.VerifiedFacts = ['   '];
+  const [emptyFactResult] = await executeCode('Extract Fields & Score Candidates', [emptyFact]);
+  assert.equal(emptyFactResult.json.Eligible, false);
+  assert.match(emptyFactResult.json.SelectionReason, /VerifiedFacts/);
+
+  const emptyFacts = structuredClone(fixture);
+  emptyFacts.json.VerifiedFacts = [];
+  const [emptyFactsResult] = await executeCode('Extract Fields & Score Candidates', [emptyFacts]);
+  assert.equal(emptyFactsResult.json.Eligible, false);
+  assert.match(emptyFactsResult.json.SelectionReason, /VerifiedFacts/);
+});
+
+test('script builder rejects malformed verified facts when called directly', async () => {
+  const [fixture] = await executeCode('Load Fictional Candidate Queue', [{ json: {} }]);
+  const malformed = {
+    json: {
+      SelectedCandidate: {
+        ...fixture.json,
+        Category: 'Motorcycle Rain Gear',
+        VerifiedFacts: ['Waterproof outer layer', '  ']
+      }
+    }
+  };
+
+  await assert.rejects(
+    executeCode('Build Hook-Proof-CTA Script', [malformed]),
+    /VerifiedFacts must be a non-empty array of non-blank strings/
+  );
+});
+
 test('workflow graph contains no network-capable nodes', () => {
   const types = new Set(workflow.nodes.map(node => node.type));
   assert.equal(types.has('n8n-nodes-base.httpRequest'), false);
